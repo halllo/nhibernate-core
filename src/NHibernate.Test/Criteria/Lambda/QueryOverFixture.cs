@@ -1,13 +1,8 @@
 using System;
-using System.Collections;
-
-using NUnit.Framework;
-
 using NHibernate.Criterion;
 using NHibernate.SqlCommand;
 using NHibernate.Transform;
-using NHibernate.Type;
-using NHibernate.Util;
+using NUnit.Framework;
 
 namespace NHibernate.Test.Criteria.Lambda
 {
@@ -222,7 +217,7 @@ namespace NHibernate.Test.Criteria.Lambda
 		[Test]
 		public void SimpleCriterion_AliasReferenceSyntax()
 		{
-			ICriteria expected = 
+			ICriteria expected =
 				CreateTestCriteria(typeof(Person), "personAlias")
 					.Add(Restrictions.Eq("personAlias.Name", "test name"))
 					.Add(Restrictions.Not(Restrictions.Eq("personAlias.Name", "not test name")))
@@ -653,7 +648,7 @@ namespace NHibernate.Test.Criteria.Lambda
 			expected.SetFetchMode("PersonList", FetchMode.Eager);
 			expected.SetLockMode(LockMode.UpgradeNoWait);
 
-			IQueryOver<Person,Person> actual = CreateTestQueryOver<Person>();
+			IQueryOver<Person, Person> actual = CreateTestQueryOver<Person>();
 			actual.WhereRestrictionOn(p => p.Children).IsNotEmpty();
 			actual.OrderBy(p => p.Name).Asc();
 			actual.Fetch(p => p.PersonList).Eager();
@@ -824,11 +819,11 @@ namespace NHibernate.Test.Criteria.Lambda
 		[Test]
 		public void CloneIQueryOverWithSubType()
 		{
-			IQueryOver<Person,Child> expected =
+			IQueryOver<Person, Child> expected =
 				CreateTestQueryOver<Person>()
 					.JoinQueryOver(p => p.Children);
 
-			IQueryOver<Person,Person> actual = expected.Clone();
+			IQueryOver<Person, Person> actual = expected.Clone();
 
 			ICriteria expectedCriteria = expected.UnderlyingCriteria.GetCriteriaByAlias("this");
 
@@ -899,7 +894,6 @@ namespace NHibernate.Test.Criteria.Lambda
 
 			AssertCriteriaAreEqual(expected.UnderlyingCriteria, actual);
 		}
-
 	}
 
 }
